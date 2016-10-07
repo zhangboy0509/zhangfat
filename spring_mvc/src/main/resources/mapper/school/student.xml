@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhangfat.portal.dao.school.impl.StudentDAOImpl">
+	<resultMap type="com.zhangfat.portal.pojo.school.Student" id="studentmodel">
+		<result column="ID" property="id" />
+		<result column="NAME" property="name" />
+		<result column="CLASS_ID" property="classId" />
+		<result column="GENDER" property="gender" />
+		<result column="BIRTHDAY" property="birthday" />
+	</resultMap>
+	
+	<select id="getById" resultMap="studentmodel">
+		SELECT
+			ID,
+			NAME,
+			CLASS_ID,
+			GENDER,
+			BIRTHDAY
+		FROM STUDENT
+		WHERE ID = #{id}
+	</select>
+	
+	<select id="list" resultMap="studentmodel">
+		SELECT
+			ID,
+			NAME,
+			CLASS_ID,
+			GENDER,
+			BIRTHDAY
+		FROM STUDENT
+		WHERE 1=1 
+			<if test="id != null">AND ID=#{id}</if>
+			<if test="name != null">AND NAME=#{name}</if>
+			<if test="classId != null">AND CLASS_ID=#{classId}</if>
+			<if test="gender != null">AND GENDER=#{gender}</if>
+			<if test="birthday != null">AND BIRTHDAY=#{birthday}</if>
+		<if test="sortColumns != null"> ORDER BY  ${sortColumns}</if>
+	</select>
+</mapper>
